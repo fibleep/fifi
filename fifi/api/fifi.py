@@ -1,8 +1,7 @@
 import polars as pl
 import pandas as pd
 from .plot import Plot
-
-
+import matplotlib.pyplot as plt
 
 
 class Fifi:
@@ -18,7 +17,10 @@ class Fifi:
         self.df = df
         self.target = target
         self.time_series = time_series
-    
+        plt.style.use("fivethirtyeight")
+        plt.rcParams["figure.figsize"] = 15, 10
+        
+
     def describe(self) -> dict:
         """Generate a report for a DataFrame.
         @param df: DataFrame to generate a report for.
@@ -30,7 +32,7 @@ class Fifi:
         print(f"Rows: {self.df.shape[0]}")
         print(f"Columns: {self.df.shape[1]}\n") if len(self.df.shape) > 1 else None
         return self.df.describe()
-    
+
     def plots(self):
         """Create a Plot instance for a DataFrame.
         You can use this to plot different kinds of plots.

@@ -1,6 +1,6 @@
 
 from typing import Literal
-from .plots import Distribution, Correlation
+from .plots import Distribution, Correlation, TimeSeries
 from functools import partial
 
 class Plot:
@@ -56,7 +56,7 @@ class Plot:
         return Correlation(self.df, method)
     
     def _time_series(self):
-        pass
+        return TimeSeries(self.df, self.target)
     
     def __repr__(self):
         return """Use get_plots() on this to return a dictionary with the plots
