@@ -4,9 +4,10 @@ from .plots import Distribution, Correlation
 from functools import partial
 
 class Plot:
-    def __init__(self, df, target=None):
+    def __init__(self, df, target=None, time_series=False):
         self.df = df
         self.target = target
+        self.time_series = time_series
 
     def get_plots(self, config=None):
         """
@@ -34,12 +35,17 @@ class Plot:
         
         """
         distribution = self._distribution()
-        correlation = self._correlation()
-        
-        return {
+        plots = {
             "distribution": distribution,
-            "correlation": correlation
         }
+        
+        if len(self.df.columns) > 1:
+            plots["correlation"] = self._correlation()
+        
+        if self.time_series:
+            plots["time_series"] = self._time_series()
+        
+        return plots
     
     def _distribution(self, method: Literal['hist', 'violin', 'kde'] = 'hist', columns=None):
         if columns is None:
@@ -48,6 +54,9 @@ class Plot:
     
     def _correlation(self, method: Literal['pearson', 'spearman'] = 'pearson'):
         return Correlation(self.df, method)
+    
+    def _time_series(self):
+        pass
     
     def __repr__(self):
         return """Use get_plots() on this to return a dictionary with the plots
