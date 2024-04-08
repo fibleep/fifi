@@ -2,6 +2,8 @@ import polars as pl
 import pandas as pd
 from .plot import Plot
 import matplotlib.pyplot as plt
+from .outliers import Outliers
+from .pipeline import Pipeline
 
 
 class Fifi:
@@ -39,6 +41,18 @@ class Fifi:
         @param df: DataFrame to plot.
         """
         return Plot(self.df, self.target, self.time_series)
+    
+    def outliers(self):
+        """
+        Explore and decide how to handle outliers.
+        """
+        return Outliers(self.df)
+    
+    def pipeline(self):
+        """
+        Create a pipeline for the DataFrame.
+        """
+        return Pipeline(self.df, self.target, self.time_series)
 
     def __repr__(self):
         methods = [method for method in dir(self) if callable(getattr(self, method)) and not method.startswith("__")]
