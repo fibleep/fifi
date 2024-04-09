@@ -1,6 +1,5 @@
 # Fifi
 ## data science for swiss cheese brains
----
 
 Fifi is a pypi package for quick eda and modelling made specifically for use with Jupyter Notebooks.
 Use `??` as much as possible to see the code and adapt it for your needs. The package will guide you through the usual EDA process.
@@ -10,13 +9,13 @@ The package is meant be a source of cool plots or workflows and be able to use t
 ## Installation
 
 ```bash
-pip install fifi
+pip install fifids
 ```
 
 ## Usage
 
 ```python
-from fifi import Fifi
+from fifids import Fifi
 import pandas as pd
 import polars as pl
 

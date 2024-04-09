@@ -1,12 +1,12 @@
 [tool.poetry]
-name = "fifi"
+name = "fifids"
 version = "0.1.0"
 description = "data science for swiss cheese brains"
 authors = ["fibleep <filipn924@gmail.com>"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
-python = "^3.11"
+python = "^3.9"
 polars = "^0.20.18"
 seaborn = "^0.13.2"
 pyarrow = "^15.0.2"
