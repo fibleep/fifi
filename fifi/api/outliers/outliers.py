@@ -6,7 +6,7 @@ import seaborn as sns
 
 class Outliers:
     def __init__(self, df: pl.DataFrame | pd.DataFrame):
-        self.df = df
+        self.df = df.to_pandas() if isinstance(df, pl.DataFrame) else df
 
     def show(self):
         for column_name in self.df.select_dtypes(include="number").columns:

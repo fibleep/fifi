@@ -2,9 +2,11 @@
 from typing import Literal
 from .plots import Distribution, Correlation, TimeSeries
 from functools import partial
-
+import pandas as pd
+import polars as pl
 class Plot:
-    def __init__(self, df, target=None, time_series=False):
+    def __init__(self, df: pl.DataFrame | pd.DataFrame, target=None, time_series=False):
+        self.df = df if isinstance(df, pl.DataFrame) else pl.DataFrame(df)
         self.df = df
         self.target = target
         self.time_series = time_series

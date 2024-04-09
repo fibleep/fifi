@@ -13,7 +13,6 @@ import shap
 
 
 class Pipeline:
-
     def __init__(self, df, target: str = None, time_series: bool = False):
         self.df = df.to_pandas() if isinstance(df, pl.DataFrame) else df
         self.X_train, self.X_val, self.X_test = None, None, None
@@ -55,6 +54,9 @@ class Pipeline:
                 self.X_train, self.y_train = X_train, y_train
 
     def train(self):
+        """
+        Train a model using the training data and save it to the instance.
+        """
 
         numeric_features = self.X_train.select_dtypes(
             include=["int64", "float64"]
@@ -84,9 +86,19 @@ class Pipeline:
         return self
 
     def test(self):
+        """
+        Test the model using the test data and display useful metrics.
+        """
         preds = self.model_pipeline.predict(self.X_test)
         mse = mean_squared_error(self.y_test, preds)
         print(f"Test MSE: {mse}")
+        
+        plt.figure(figsize=(12, 6))
+        sns.histplot(self.y_test, color="blue", kde=True, label="True Values")
+        sns.histplot(preds, color="red", kde=True, label="Predictions")
+        plt.legend()
+        plt.title("True Values vs Predictions")
+        plt.show()
 
     def shapley(self):
         explainer = shap.Explainer(self.model_pipeline.named_steps["model"])

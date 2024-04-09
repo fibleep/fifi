@@ -1,15 +1,18 @@
+import matplotlib.pyplot as plt
 import pandas as pd
 import polars as pl
-import matplotlib.pyplot as plt
-from typing import List
 import statsmodels.api as sm
 
+
 class TimeSeries:
-    def __init__(self, df: pl.DataFrame | pd.DataFrame, target: List[str] | str):
-        self.df = df
+    def __init__(self, df: pl.DataFrame | pd.DataFrame, target: str):
+        self.df = df if isinstance(df, pl.DataFrame) else pl.DataFrame(df)
         self.target = target
 
     def show(self):
+        """
+        Show time series plot, rolling mean plot and seasonality plot
+        """
         df = self.df.to_pandas() if isinstance(self.df, pl.DataFrame) else self.df
         self._line_plot(df[self.target])
         self._rolling_mean(df[self.target])
@@ -32,6 +35,6 @@ class TimeSeries:
         plt.show()
 
     def _seasonality(self, df):
-        decomposition = sm.tsa.seasonal_decompose(df, model="additive")
+        decomposition = sm.tsa.seasonal_decompose(df, model="additive", period=30)
         decomposition.plot()
         plt.show()
